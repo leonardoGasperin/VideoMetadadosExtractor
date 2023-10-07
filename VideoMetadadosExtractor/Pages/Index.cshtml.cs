@@ -8,9 +8,8 @@ namespace VideoMetadadosExtractor.Pages
     {
         private readonly IMetadataExtractor _metadataExtractor;
 
-        public IndexModel(ILogger<IndexModel> logger, IMetadataExtractor metadataExtractor)
+        public IndexModel(IMetadataExtractor metadataExtractor)
         {
-            _logger = logger;
             _metadataExtractor = metadataExtractor;
         }
 
