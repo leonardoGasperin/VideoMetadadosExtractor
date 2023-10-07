@@ -10,8 +10,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("https://localhost:7187",
-                                              "http://www.contoso.com");
+                          policy.WithOrigins("https://localhost:7187/").AllowAnyHeader()
+                                                  .AllowAnyMethod();    
                       });
 });
 
@@ -38,6 +38,21 @@ app.UseRouting();
 app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapGet("/echo",
+        context => context.Response.WriteAsync("echo"))
+        .RequireCors(MyAllowSpecificOrigins);
+
+    endpoints.MapControllers()
+             .RequireCors(MyAllowSpecificOrigins);
+
+    endpoints.MapGet("/echo2",
+        context => context.Response.WriteAsync("echo2"));
+
+    endpoints.MapRazorPages();
+});
 
 app.MapRazorPages();
 

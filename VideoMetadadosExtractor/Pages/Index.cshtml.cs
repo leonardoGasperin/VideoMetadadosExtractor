@@ -6,7 +6,6 @@ namespace VideoMetadadosExtractor.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
         private readonly IMetadataExtractor _metadataExtractor;
 
         public IndexModel(ILogger<IndexModel> logger, IMetadataExtractor metadataExtractor)
@@ -15,6 +14,7 @@ namespace VideoMetadadosExtractor.Pages
             _metadataExtractor = metadataExtractor;
         }
 
+        [HttpPost]
         public IActionResult OnPostVideoExtractor(IFormFile videoFile)
         {
             if (videoFile == null || videoFile.Length == 0)

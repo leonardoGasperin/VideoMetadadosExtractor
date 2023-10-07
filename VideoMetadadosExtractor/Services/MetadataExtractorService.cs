@@ -2,7 +2,6 @@
 using Interfaces;
 using Xabe.FFmpeg;
 
-
 namespace Services;
 
 public class MetadataExtractorService : IMetadataExtractor
