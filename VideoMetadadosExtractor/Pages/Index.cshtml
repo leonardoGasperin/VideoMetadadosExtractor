@@ -5,6 +5,26 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Adicione um video para coletar dados</h1>
+    <input type="file" accept=".mp4, .avi, .mov" />
 </div>
+
+@section Scripts {
+    <script>
+        const input = document.querySelector('#get-videos');
+
+        input.addEventListener('change', function () {
+            const selectedFile = input.files[0];
+            if (selectedFile) {
+                const fileType = selectedFile.type;
+                if (fileType.startsWith('video/')) {
+                    // Arquivo de vídeo válido
+                } else {
+                    alert('Por favor, selecione um arquivo de vídeo.');
+                    // Limpar o input de arquivo
+                    input.value = '';
+                }
+            }
+        });
+    </script>
+}
