@@ -1,3 +1,6 @@
+using Interfaces;
+using Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -11,6 +14,8 @@ builder.Services.AddCors(options =>
                                               "http://www.contoso.com");
                       });
 });
+
+builder.Services.AddScoped<IMetadataExtractor, MetadataExtractorService>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();

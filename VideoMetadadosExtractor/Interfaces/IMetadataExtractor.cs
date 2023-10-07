@@ -4,5 +4,5 @@ namespace Interfaces;
 
 public interface IMetadataExtractor
 {
-    public VideoMetadata ExtractMetadata(Stream videoStream);
+    public Task<VideoMetadata> ExtractMetadata(Stream videoStream);
 }

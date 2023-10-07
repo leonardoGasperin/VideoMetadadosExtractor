@@ -8,22 +8,45 @@
     <h1 class="display-4">Adicione um video para coletar dados</h1>
     <span>videos nos formatos: .mp4, .avi, .mov</span>
     <hr />
-    <input type="file" accept=".mp4, .avi, .mov" />
+    <input id="get-videos" type="file" accept=".mp4, .avi, .mov" />
+    <br />
+    <br />
+    <button id="submit-btn" type="submit">Processar</button>
+    @Html.AntiForgeryToken()
 </div>
 
 @section Scripts {
     <script>
         const input = document.querySelector('#get-videos');
+        const submit = document.querySelector('#submit-btn');
 
-        input.addEventListener('change', function () {
+        submit.addEventListener('click', function () {
             const selectedFile = input.files[0];
+            const formData = new FormData();
+            formData.append('videoFile', selectedFile);
             if (selectedFile) {
                 const fileType = selectedFile.type;
-                if (fileType.startsWith('video/')) {
-                    // FETCH
-                } else {
+                if (!fileType.startsWith('video/')) {
                     alert('Por favor, selecione um arquivo de vídeo.');
                     input.value = '';
+                } else {
+                    fetch("https://localhost:7187/Index?handler=VideoExtractor", {
+                        method: 'POST',
+                        body: formData
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                console.error('Erro na resposta da API:', response.statusText);
+                                throw new Error('Não foi possível obter os dados da API');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log('Dados recebidos:', data.DurationInSeconds);
+                        })
+                        .catch(error => {
+                            console.error('Erro na solicitação:', error);
+                        });
                 }
             }
         });
