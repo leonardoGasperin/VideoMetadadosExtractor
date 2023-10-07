@@ -12,9 +12,29 @@ namespace VideoMetadadosExtractor.Pages
             _logger = logger;
         }
 
-        public void OnGet()
+        public IActionResult VideoExtractor(IFormFile videoFile)
         {
+            if (videoFile != null)
+            {
+                string[] allowedVideoExtensions = { ".mp4", ".avi", ".mov" };
+                string fileExtension = Path.GetExtension(videoFile.FileName);
 
+                if (allowedVideoExtensions.Contains(fileExtension.ToLower()))
+                {
+                    // Extrair informações aqui
+                }
+                else
+                {
+                    return BadRequest("Por favor, envie um arquivo de vídeo válido.");
+                }
+            }
+            else
+            {
+                return BadRequest("Nenhum arquivo de vídeo enviado.");
+            }
+
+
+            return StatusCode(200);
         }
     }
 }

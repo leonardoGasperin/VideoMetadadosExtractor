@@ -6,6 +6,8 @@
 
 <div class="text-center">
     <h1 class="display-4">Adicione um video para coletar dados</h1>
+    <span>videos nos formatos: .mp4, .avi, .mov</span>
+    <hr />
     <input type="file" accept=".mp4, .avi, .mov" />
 </div>
 
@@ -18,10 +20,9 @@
             if (selectedFile) {
                 const fileType = selectedFile.type;
                 if (fileType.startsWith('video/')) {
-                    // Arquivo de vídeo válido
+                    // FETCH
                 } else {
                     alert('Por favor, selecione um arquivo de vídeo.');
-                    // Limpar o input de arquivo
                     input.value = '';
                 }
             }
