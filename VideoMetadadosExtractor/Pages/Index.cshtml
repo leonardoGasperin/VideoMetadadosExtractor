@@ -12,7 +12,9 @@
     <br />
     <br />
     <button id="submit-btn">Processar</button>
-    @Html.AntiForgeryToken()
+    <br />
+    <br />
+    <div id="showroom"></div>
 </div>
 
 @section Scripts {
@@ -30,7 +32,7 @@
                     alert('Por favor, selecione um arquivo de vídeo.');
                     input.value = '';
                 } else {
-                    fetch("https://localhost:7187/Index?handler=VideoExtractor", {
+                    fetch("?handler=VideoExtractor", {
                         method: 'POST',
                         body: formData
                     })
@@ -42,7 +44,7 @@
                             return response.json();
                         })
                         .then(data => {
-                            console.log('Dados recebidos:', data.DurationInSeconds);
+                            showOnScreen(data);
                         })
                         .catch(error => {
                             console.error('Erro na solicitação:', error);
@@ -50,5 +52,42 @@
                 }
             }
         });
+
+        function showOnScreen(data) {
+            const showroomDiv = document.querySelector('#showroom');
+            let prep = "";
+
+            prep += `<div>
+                <span>{data.DurationInSeconds}</span>
+                <br />
+                <span>{data.Width}</span>
+                <br />
+                <span>{data.Height}</span>
+                <br />
+                <span>{data.FrameRate}</span>
+                <br />
+                <span>{data.VideoCodec}</span>
+                <br />
+                <span>{data.VideoBitrate}</span>
+                <br />
+                <span>{data.AudioCodec}</span>
+                <br />
+                <span>{data.AudioChannels}</span>
+                <br />
+                <span>{data.AudioSampleRate}</span>
+                <br />
+                <span>{data.AudioBitrate}</span>
+                <br />
+                <span>{data.AudioLanguage}</span>
+                <br />
+                <span>{data.HasSubtitles}</span>
+                <br />
+                <span>{data.AspectRatio}</span>
+                <br />
+                <span>{data.CreationDate}</span>
+            </div>`;
+
+            showroomDiv.innerHTML += prep;
+        }
     </script>
 }
